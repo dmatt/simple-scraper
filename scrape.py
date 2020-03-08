@@ -49,5 +49,12 @@ def scrape(
 ):
   soup = request_to_soup(url.format(keyword), paginator)
   parents = soup.find_all(*parents)
-  children = [strip_spaces(p.find(*child).text) for p in parents]
+  # list of tuples of interesting bits from each result
+  children = [
+    (
+      strip_spaces(p.find(*child).text),
+      strip_spaces(p.find(*child).href),
+
+    ) for p in parents
+  ]
   return children
